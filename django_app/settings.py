@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
+if os.path.exists("env.py"):
+import env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p@ei#69*b*zz3u4yie-$()@cy^l(+x9&@6ypx+r0lm(3%_9hr7'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
+# SECRET_KEY = "pb@s*xfy4hi2n(nv#&021_6s*w*#u636-nld=5)-n@aeacv#i"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -70,15 +73,14 @@ TEMPLATES = [
         },
     },
 ]
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = (
     
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
-    
-]
+)
 SITE_ID = 1
 
 WSGI_APPLICATION = 'django_app'
